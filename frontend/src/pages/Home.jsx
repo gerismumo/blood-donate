@@ -10,8 +10,8 @@ function Home () {
     }
     return (
         <div className="home-page">
-            <div className="header">
-                <nav className='flex flex-row'>
+            <div className="header bg-white">
+                <nav className='flex justify-between'>
                     <div className="logo">
                         <h2>Blood Donate</h2>
                     </div>
