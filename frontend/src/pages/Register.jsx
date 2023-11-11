@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 import Header from './Header';
 
 
@@ -48,9 +52,18 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
       }
 
       console.log('formData',formData);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (formData.password === formData.confirmPassword) {
+            toast.error('Password does not match');
+        }
+      }
     return(
     <>
     <Header />
+    <ToastContainer />
     <div className="register-page">
         <div className="register-content">
           <div className="reg-header">
@@ -59,7 +72,7 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
             </h2>
           </div>
           <div className="register-form">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <label>FirstName:</label>
                     <input type="text" 
                     name='firstName' 
