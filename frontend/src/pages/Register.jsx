@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
 
 import Header from './Header';
 
@@ -16,9 +15,8 @@ const [formData, setFormData] = useState({
     firstName:'',
     lastName:'',
     email: '',
+    phoneNumber:'',
     gender: '',
-    bloodType: '',
-    donateType: '',
     password: '',
     confirmPassword: '',
 });
@@ -56,9 +54,35 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
       const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (formData.password === formData.confirmPassword) {
-            toast.error('Password does not match');
+        const requestData = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phoneNumber: formData.phoneNumber,
+            gender: formData.gender,
+            password: formData.password,
+            county: formData.county,
         }
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error('Password does not match');
+        } 
+        const Submit_api = `${process.env.REACT_APP_DATABASE_API}/api/registerUser`;
+        const submitData = async() => {
+            try {
+                const response = await axios.post(Submit_api, {
+                    requestData
+                }, {
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    }
+                });
+                console.log(response);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        submitData();
       }
     return(
     <>
@@ -94,6 +118,12 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                     required 
                     onChange={handleFormDataChange}
                     />
+                    <label htmlFor="">Phone:</label>
+                    <input type="tel" 
+                    name='phoneNumber'
+                    required
+                    onChange={handleFormDataChange}
+                     />
                     <div className='radio'>
                         <label htmlFor="male">Gender</label>
                         <div className="radio-1">
@@ -115,7 +145,7 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                             <label htmlFor="female">Female</label>
                         </div> 
                     </div>
-                    <label htmlFor="">Blood Group Type:</label>
+                    {/* <label htmlFor="">Blood Group Type:</label>
                     <select name="bloodType" onChange={handleFormDataChange}>
                         <option value=""></option>
                         <option value="A">A</option>
@@ -128,7 +158,7 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                         <option value=""></option>
                         <option value="BloodDonor">Blood Donor</option>
                         <option value="recipient">Recipient</option>
-                    </select>
+                    </select> */}
                     <label htmlFor="">County</label>
                     <Select 
                     options={options}
