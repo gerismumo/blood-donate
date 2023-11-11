@@ -7,9 +7,11 @@ dotenv.config({path: './database/.env'});
 app.use(cors());
 app.use(express.json());
 
+const routes = require('./routes/routes');
+app.use('/api', routes);
 
 const port = process.env.PORT;
-console.log(port);
+
 
 const createConnection = require('./database/db');
 

@@ -10,19 +10,21 @@ function Home () {
     }
     return (
         <div className="home-page">
-            <div className="header bg-white">
-                <nav className='flex justify-between'>
+            <div className="header ">
+                <nav>
                     <div className="logo">
                         <h2>Blood Donate</h2>
                     </div>
-                    <div className="links">
-                        <Link to='/About'>About</Link>
-                        <Link to='/service'>Services</Link>
-                        <Link to='/How'>How to?</Link>
-                    </div>
-                    <div className="accounts">
-                        <button onClick={handleLoginLink}>Login</button>
-                        <button onClick={handleRegister}>Register</button>
+                    <div className="links-account">
+                        <div className="links">
+                            <Link to='/About'>About</Link>
+                            <Link to='/service'>Services</Link>
+                            <Link to='/How'>How to?</Link>
+                        </div>
+                        <div className="accounts">
+                            <button onClick={handleLoginLink}>Login</button>
+                            <button onClick={handleRegister}>Register</button>
+                        </div>
                     </div>
                 </nav>
             </div>
