@@ -37,12 +37,22 @@ function Login() {
         });
         const success = response.data.success;
         if(success) {
-          setLoginForm(false); 
-          setLoginSuccess(true);
+          const loginDetail = response.data.data;
+          // console.log(loginDetail);
+          const bloodType = loginDetail[0].blood_type;
+          const userType = loginDetail[0].user_type;
+          console.log('blood type',userType, bloodType);
+
+          if(bloodType !== null &&  userType !== null) {
+             navigate('/viewPage');
+          }else {
+            setLoginForm(false); 
+            setLoginSuccess(true);
+          }
           console.log('successifully logged in');
         }
-        const loginDetail = response.data.data;
-        console.log(loginDetail);
+       
+       
       } catch (error) {
         console.log(error);
       }
@@ -51,6 +61,7 @@ function Login() {
   };
   const[loginType, setLoginType] = useState({
     loginAs: '',
+    bloodType:'',
   });
 
   const loginAsChange = (e) => {
@@ -63,7 +74,6 @@ function Login() {
 
   const submitLoginAs = (e) => {
     e.preventDefault();
-
     const login_type = `${process.env.REACT_APP_DATABASE_API}/api/loginType`;
     const loginTypes = async() => {
       try {
@@ -123,11 +133,20 @@ function Login() {
             <h2>Login As</h2>
             <div className="login-as-form">
               <form onSubmit={submitLoginAs}>
+                <label htmlFor="">Category</label>
                 <select name="loginAs" onChange={loginAsChange}>
                     <option value=""></option>
                     <option value="BloodDonor">Blood Donor</option>
                     <option value="BloodRecipient">Blood Recipient</option>
                   </select>
+                  <label htmlFor="">Blood Type</label>
+                  <select name="bloodType" onChange={loginAsChange}>
+                        <option value=""></option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="AB">AB</option>
+                        <option value="O">0</option>
+                    </select>
                   <button type='submit'>Submit</button>
               </form>
             </div>

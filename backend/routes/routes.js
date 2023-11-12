@@ -53,9 +53,11 @@ router.post('/loginType', async(req, res)=> {
     try {
         const {loginType} = req.body;
         const loginAs = loginType.loginAs;
+        const bloodType = loginType.bloodType;
+
         console.log(loginAs);
         console.log(loginEmail);
-        await controller.updateLogin(loginAs, loginEmail);
+        await controller.updateLogin(loginAs,bloodType, loginEmail);
         res.json({success: true, message:'Successifully selected'});
     } catch(error) {
         console.log(error.message);

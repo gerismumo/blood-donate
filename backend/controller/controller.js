@@ -50,12 +50,12 @@ const controller = {
             console.error(error);
         }
     },
-    updateLogin: async (loginAs,loginEmail) => {
+    updateLogin: async (loginAs,bloodType, loginEmail) => {
         try {
             const connection = await createConnection();
-            const query = 'UPDATE users_table SET user_type = ? WHERE user_email = ?';
+            const query = 'UPDATE users_table SET user_type = ?, blood_type = ? WHERE user_email = ?';
             const updateLogin = await new Promise((resolve, reject) => {
-                connection.query(query,[loginAs,loginEmail], (err, result) => {
+                connection.query(query,[loginAs,bloodType, loginEmail], (err, result) => {
                     if(err) {
                         reject(err);
                     }else {
