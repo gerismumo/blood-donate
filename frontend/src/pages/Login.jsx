@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from './Footer';
 import Header from './Header';
 
 function Login() {
@@ -24,6 +25,15 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const requiredFields =['email','password'];
+
+            for (const field of requiredFields) {
+            if (!formData[field]) {
+                toast.error(`Please provide a value for ${field}`);
+                return;
+            }
+            }
     
     console.log(formData);
     const login = `${process.env.REACT_APP_DATABASE_API}/api/loginUser`;
@@ -73,6 +83,14 @@ function Login() {
 
   const submitLoginAs = (e) => {
     e.preventDefault();
+    const requiredField = ['loginAs', 'bloodType'];
+
+            for (const field of requiredField) {
+            if (!loginType[field]) {
+                toast.error(`Please provide a value for ${field}`);
+                return;
+            }
+            }
     const login_type = `${process.env.REACT_APP_DATABASE_API}/api/loginType`;
     const loginTypes = async() => {
       try {
@@ -104,9 +122,10 @@ function Login() {
       <Header />
       <div className="login-page">
         <ToastContainer />
+        <div className="login-content">
         {loginForm && (
-          <div className="login-content">
-            <div className="log-header">
+          <>
+          <div className="log-header">
               <h2>
                 Login Here
               </h2>
@@ -128,11 +147,13 @@ function Login() {
                 required
                 onChange={handleChange}
               />
+              <div className="button">
               <button type="submit">Login</button>
+              </div>
             </form>
           </div>
-          </div>
-          
+          </>
+            
         )}
         
         {loginSuccess && (
@@ -154,12 +175,16 @@ function Login() {
                         <option value="AB">AB</option>
                         <option value="O">0</option>
                     </select>
-                  <button type='submit'>Submit</button>
+                    <div className="button">
+                      <button type='submit'>Submit</button>
+                    </div>
               </form>
             </div>
           </div>
         )}
+         </div>  
       </div>
+      <Footer />
     </>
   );
 }

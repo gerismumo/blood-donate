@@ -23,6 +23,8 @@ code {
   ---blue:#1f73bb;
   ---gray:#8e8e8e;
   ---lightGray: #d3d3d3;
+  ---skyBlue: #09b1f3;
+  ---hoverBlue:#0683b5;
 }
 
 .main-header{
@@ -330,14 +332,14 @@ code {
   cursor: pointer;
 }
 .register-page button {
-  background-color: #09b1f3;
+  background-color: var(---skyBlue);
   padding: 5px 10px;
   border-radius: 5px;
   color: #fff;
   font-weight: 700;
 }
 .register-page button:hover {
-  background-color:#0683b5; 
+  background-color: var(---hoverBlue); 
 }
 .register-button {
   margin-top: 10px;
@@ -349,18 +351,24 @@ code {
 .login-page{
   display: flex;
   flex-direction: column;
+  height: 90vh;
 }
 .login-page .login-content {
-  margin-top: 80px;
-  margin: 80px auto;
+  margin-top: 90px;
+  margin: 90px auto;
+  background-color: var(---lightGray);
+  padding: 10px 30px;
+  border-radius: 10px;
 }
 .login-page  .log-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-size: 23px;
-  font-weight: 500;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(---green);
+  margin-bottom: 10px;
 }
 .login-page .login-form{
   margin: 0 auto;
@@ -372,9 +380,36 @@ code {
   margin: 0 auto;
 }
 
-.login-page form  input {
+.login-page form  input,select {
   outline: none;
   border: 1px solid #09b1f3;
   border-radius: 3px;
+  height: 4.5vh;
+}
+.login-page form label{
+  margin-bottom: 10px;
+}
+.login-page form button {
+  background-color: var(---skyBlue);
+  padding: 5px 15px;
+  border-radius: 5px;
+  color: var(---white);
+  font-weight: 500;
+}
+.login-page form button:hover{
+  background-color: var(---hoverBlue);
+}
+.login-page form .button {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-page .login-as h2{
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(---green);
+  margin-bottom: 10px;
 }
 

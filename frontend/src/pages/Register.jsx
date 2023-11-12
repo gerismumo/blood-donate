@@ -4,13 +4,14 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
 
 
 
 function Register() {
-
+const navigate = useNavigate();
 const[countiesList, setCountiesList] = useState([]);
 const [formData, setFormData] = useState({
     firstName:'',
@@ -88,6 +89,14 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                     }
                 });
                 console.log(response);
+                const success = response.data.success;
+                if(success) {
+                    navigate('/login');
+                }else if(!success){
+                    toast.error(response.data.message);
+                }else {
+                    toast.error('Failed to login');
+                }
             } catch(error) {
                 console.error(error);
             }
@@ -183,10 +192,8 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                 
             </div>
         </div>
-        <>
-        <Footer />
-        </>
         </div>
+        <Footer />
     </>
         
     )

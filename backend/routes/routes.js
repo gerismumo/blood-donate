@@ -21,7 +21,7 @@ router.post('/registerUser', async(req, res) => {
         const databaseEmail = await controller.loginUser(email);
         if(databaseEmail.length > 0){
             // console.log('Email already exists');
-            req.json({message: 'Email already exists'});
+            res.json({success: false, message: 'Email already exists'});
             
         }else {
              await controller.registerUser(requestData);
