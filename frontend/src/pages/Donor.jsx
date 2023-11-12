@@ -6,6 +6,9 @@ import Footer from './Footer';
 function Donor() {
     const navigate = useNavigate();
     const[usersList, setUsersList] = useState([]);
+    // const [filteredList, setFilteredList] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     const handleHomeTab = () => {
         navigate('/');
@@ -25,8 +28,26 @@ function Donor() {
         usersData();
     },[users_api]);
     console.log(usersList);
-    const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);
-    console.log('filteredList',filteredList);
+  
+        const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null && user.user_type ==='BloodDonor')
+    
+
+    
+    const updatedList = filteredList ? 
+    filteredList.filter((user) => {
+        return (
+            user.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.blood_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_gender.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.user_phone.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.user_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_county.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    }): [];
+
+    console.log('filteredList',updatedList);
     return(
         <>
         <div className="donor-page">
@@ -36,8 +57,12 @@ function Donor() {
                     <h2>Blood Donate</h2>
                 </div>
                 <div className="search-input">
-                    <input type="text" />
-                    <button>Search</button>
+                    <input
+                     type="text" 
+                     value={searchQuery}
+                     onChange={(e) => setSearchQuery(e.target.value)}
+                     placeholder='Search...'
+                     />
                 </div>
                 <div className="links">
                     <button onClick={handleHomeTab}>Home</button>
@@ -50,7 +75,7 @@ function Donor() {
                 </div>
                 <div className="cards">
                     {
-                        filteredList.map(user => (
+                        updatedList.map(user => (
                             <div className="users-cards" key={user.user_id}>
                             <div className="img">
                                 <img src="/images/personicon.png" alt="" />
