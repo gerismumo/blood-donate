@@ -41,7 +41,6 @@ function Login() {
           // console.log(loginDetail);
           const bloodType = loginDetail[0].blood_type;
           const userType = loginDetail[0].user_type;
-          console.log('blood type',userType, bloodType);
 
           if(bloodType !== null &&  userType !== null) {
              navigate('/viewPage');
@@ -49,7 +48,7 @@ function Login() {
             setLoginForm(false); 
             setLoginSuccess(true);
           }
-          console.log('successifully logged in');
+          // console.log('successifully logged in');
         }
        
        

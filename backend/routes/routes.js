@@ -62,6 +62,27 @@ router.post('/loginType', async(req, res)=> {
     } catch(error) {
         console.log(error.message);
     }
+});
+
+router.get('/usersList', async(req, res) => {
+    try {
+        const data = await controller.selectUsers();
+        res.json({success: true, data: data});
+    }catch(error) {
+        res.json({success: false, error: error.message});
+        console.log(error)
+    }
+});
+
+router.delete('/deleteUser/:userId', async(req, res) => {
+    try {
+        const {userId} = req.params;
+        await controller.deleteUser(userId);
+        res.json({success: true});
+    }catch(error) {
+        res.json({success: false, error: error.message});
+        console.log(error)
+    }
 })
 
 module.exports = router;

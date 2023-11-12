@@ -67,6 +67,45 @@ const controller = {
         } catch(error) {
             console.error(error);
         }
+    },
+    selectUsers: async() => {
+        try {
+            const connection = await createConnection();
+            const query = 'SELECT * FROM users_table';
+
+            const selectUser = await new Promise((resolve, reject) => {
+                connection.query(query, (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(result);
+                    }
+                });
+            });
+            return selectUser;
+        } catch(error) {
+            console.error(error);
+        }
+    },
+    deleteUser: async (userId) => {
+        try {
+            const connection = await createConnection();
+            const query = 'DELETE FROM users_table WHERE user_id = ?';
+ 
+            const delUser = await new Promise((resolve, reject) => {
+                connection.query(query,[userId], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(result);
+                       
+                    }
+                });
+            });
+            return delUser;
+        } catch(error) {
+            console.error(error);
+        }
     }
 }
 
