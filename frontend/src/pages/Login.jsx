@@ -52,9 +52,11 @@ function Login() {
           const bloodType = loginDetail[0].blood_type;
           const userType = loginDetail[0].user_type;
 
-          if(bloodType !== null &&  userType !== null) {
-             navigate('/viewPage');
-          }else {
+          if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
+             navigate('/receiversPage');
+          }else if (bloodType !== null &&  userType !== null && userType === 'BloodRecipient') {
+            navigate('/donorsPage');
+          } else {
             setLoginForm(false); 
             setLoginSuccess(true);
           }
@@ -103,7 +105,7 @@ function Login() {
         });
         const success =response.data.success;
         if(success) {
-          navigate('/viewPage');
+          navigate('/donorsPage');
         }else {
           setLoginSuccess(false);
           setLoginForm(true);

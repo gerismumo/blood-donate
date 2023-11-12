@@ -412,4 +412,99 @@ code {
   color: var(---green);
   margin-bottom: 10px;
 }
+/* donors page css */
+.main-header .search-input {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.main-header .search-input input {
+  border-radius: 5px;
+  outline: none;
+  padding: 3px;
+}
+.main-header .search-input button {
+  background-color: var(---white);
+  padding: 3px 15px;
+  border-radius: 5px;
+  color: var(---black);
+  font-weight: 700;
+}
+.main-header .search-input button:hover {
+  background-color: orangered;
+}
+.donor-page{
+  display: flex;
+  flex-direction: column;
+}
 
+.donor-content{
+  margin-top: 90px;
+}
+.donor-content .donor-text {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.donor-content .donor-text h1 {
+  color: var(---green);
+  font-size: 40px;
+  font-weight: 700;
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 0 20px;
+}
+.users-cards{
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 280px;
+  background-color: var(---lightGray);
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 30px;
+}
+.users-cards:hover{
+  background-color: var(---gray)
+}
+.users-cards .img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.users-cards .img img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.users-cards .card-text {
+  display: flex;
+  flex-direction: column;
+text-align: center;
+align-items: center;
+}
+.users-cards .card-text .name{
+  color: var(---green);
+  font-size: 20px;
+  font-weight: 700;
+}
+.users-cards .card-text .name p {
+  text-transform:unset;
+}
+.users-cards .card-text{
+  color: var(---skyBlue);
+  font-size: 18px;
+  font-weight: 500;
+}
+.users-cards .card-text:hover{
+  color: var(---white);
+}
+.users-cards .card-text span{
+  color: var(---blue);
+}
