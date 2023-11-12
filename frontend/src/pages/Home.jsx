@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 function Home () {
     const navigate = useNavigate();
     const handleLoginLink = () => {
@@ -129,9 +130,9 @@ function Home () {
                     <h2>Thank you for your support!</h2>
                 </div>
             </div>
-            <footer>
-            <p>&copy; 2023 BloodConnect. All rights reserved.</p>
-            </footer>
+            <>
+             <Footer />
+            </>
         </div>
     )
 }

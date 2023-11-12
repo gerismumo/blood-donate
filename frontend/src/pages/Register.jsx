@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Footer from './Footer';
 import Header from './Header';
 
 
@@ -54,6 +55,15 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
       const handleSubmit = (e) => {
         e.preventDefault();
 
+        const requiredFields = ['firstName', 'lastName', 'email', 'phoneNumber', 'gender', 'password', 'confirmPassword', 'county'];
+
+            for (const field of requiredFields) {
+            if (!formData[field]) {
+                toast.error(`Please provide a value for ${field}`);
+                return;
+            }
+            }
+
         const requestData = {
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -92,7 +102,7 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
         <div className="register-content">
           <div className="reg-header">
             <h2>
-                Register Here:
+                SignUp Here:
             </h2>
           </div>
           <div className="register-form">
@@ -125,24 +135,28 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                     onChange={handleFormDataChange}
                      />
                     <div className='radio'>
-                        <label htmlFor="male">Gender</label>
+                        <label htmlFor="male">Gender:</label>
                         <div className="radio-1">
-                            <input type="radio" 
-                            name="gender" 
-                            id="male" 
-                            value='male'
-                            onChange={handleFormDataChange}
-                            />
-                            <label htmlFor="male">Male</label>
+                            <label htmlFor="male" className='radio-label'>
+                                <input type="radio" 
+                                name="gender" 
+                                id="male" 
+                                value='male'
+                                onChange={handleFormDataChange}
+                                />
+                                Male
+                            </label>
                         </div>
                         <div className="radio-2">
                             <input type="radio" 
-                            name="gender" 
-                            id="female" 
-                            value='female'
-                            onChange={handleFormDataChange}
-                            />
-                            <label htmlFor="female">Female</label>
+                                    name="gender" 
+                                    id="female" 
+                                    value='female'
+                                    onChange={handleFormDataChange}
+                                    />
+                                <label htmlFor="female" className='radio-label'>
+                                    Female
+                                </label>
                         </div> 
                     </div>
                     <label htmlFor="">County</label>
@@ -151,24 +165,27 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                     onChange={handleChange}
                     />
                     <label htmlFor="">Password:</label>
-                    <input type="text" 
+                    <input type="password" 
                     name='password' 
                     required
                     onChange={handleFormDataChange}
                     />
-                    <label htmlFor="">Confirm Password</label>
-                    <input type="text" 
+                    <label htmlFor="">Confirm Password:</label>
+                    <input type="password" 
                     name='confirmPassword' 
                     require 
                     onChange={handleFormDataChange}
                     />
                     <div className="register-button">
-                        <button type='submit'>Register</button>
+                        <button type='submit'>SignUp</button>
                     </div>
                 </form>
                 
             </div>
         </div>
+        <>
+        <Footer />
+        </>
         </div>
     </>
         
