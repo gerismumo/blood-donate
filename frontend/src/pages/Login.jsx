@@ -105,7 +105,13 @@ function Login() {
       <div className="login-page">
         <ToastContainer />
         {loginForm && (
-          <div className="login-form">
+          <div className="login-content">
+            <div className="log-header">
+              <h2>
+                Login Here
+              </h2>
+            </div>
+            <div className="login-form">
             <form onSubmit={handleSubmit}>
               <label htmlFor="email">Email:</label>
               <input
@@ -125,6 +131,8 @@ function Login() {
               <button type="submit">Login</button>
             </form>
           </div>
+          </div>
+          
         )}
         
         {loginSuccess && (

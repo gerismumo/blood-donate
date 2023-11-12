@@ -145,20 +145,6 @@ const counties_api = `${process.env.REACT_APP_DATABASE_API}/api/countiesData`;
                             <label htmlFor="female">Female</label>
                         </div> 
                     </div>
-                    {/* <label htmlFor="">Blood Group Type:</label>
-                    <select name="bloodType" onChange={handleFormDataChange}>
-                        <option value=""></option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="AB">AB</option>
-                        <option value="O">0</option>
-                    </select>
-                    <label htmlFor="">Category</label>
-                    <select name="donateType" id="" onChange={handleFormDataChange}>
-                        <option value=""></option>
-                        <option value="BloodDonor">Blood Donor</option>
-                        <option value="recipient">Recipient</option>
-                    </select> */}
                     <label htmlFor="">County</label>
                     <Select 
                     options={options}

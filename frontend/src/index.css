@@ -16,9 +16,20 @@ code {
     monospace;
 }
 
+:root{
+  ---green:#339b20;
+  ---black:#222222;
+  ---white:#ffffff;
+  ---blue:#1f73bb;
+  ---gray:#8e8e8e;
+}
+
 .main-header{
  align-items: center;
  box-shadow: 0px 3px 5px #ccc ;
+ background-color: var(---green);
+ position: fixed;
+ width: 100%;
 }
 .main-header nav {
   display: flex;
@@ -32,25 +43,32 @@ code {
 .main-header .logo h2{
   font-size: 30px;
   font-weight: 700;
+  color: var(---white);
 }
 .main-header .links {
-  margin-right: 30px;
+  margin-right: 25px;
   display: flex;
   justify-content: center;
   gap: 30px;
   font-size: 20px;
   font-weight: 500;
 }
+.main-header .links button{
+  color: var(---white);
+  font-weight: 700;
+}
 .main-header .links button:hover {
-  color: #09b1f3;
+  color: var(---black);
 }
 .home-page {
   display: flex;
   flex-direction: column;
 }
 .header {
-  background-color: white;
+  background-color: var(---blue);
   box-shadow: 0px 2px 5px #ccc;
+  position: fixed;
+  width: 100%;
   
 }
 .home-page nav {
@@ -65,6 +83,7 @@ code {
 .home-page .logo h2 {
   font-size: 20px;
   font-weight: 700;
+  color: white;
 }
 .home-page .links-account {
   display: flex;
@@ -87,11 +106,161 @@ code {
 .home-page a, button{
   font-size: 20px;
 }
-.home-page a:hover, 
-.home-page button:hover {
-  color: #09b1f3;
+.home-page  nav a, 
+.home-page  nav button {
+  color: white;
+  font-weight: 700;
+}
+.home-page  nav a:hover, 
+.home-page  nav button:hover {
+  color: var(---black);
 }
 
+.home-page .about{
+  background-color: transparent;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+}
+.home-page .about .container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-page .about .container .text h1{
+  font-size: 70px;
+  color: var(---green);
+  font-weight: 800;
+  text-align: center;
+}
+.home-page .about .container .text h2{
+  font-size: 33px;
+  color: var(---blue);
+  font-weight: 600;
+}
+.home-page .about .container .text p{
+  font-size: 20px;
+  color: var(---black);
+  font-weight: 500;
+  line-height: 50px;
+}
+.home-page .about .category-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.home-page .about .category-type h1{
+  font-size: 30px;
+  color: var(---blue);
+  font-weight: 500;
+  text-align: center;
+}
+.home-page .about .category-type ul li {
+  list-style-type: disc;
+  line-height: 6.2vh;
+  font-size: 20px;
+}
+
+.home-page .matters {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.home-page .matters .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-page .matters .text h1{
+  font-size: 50px;
+  color: var(---green);
+  font-weight: 800;
+  text-align: center;
+  margin-top: 40px;
+}
+.home-page .matters .text-p p {
+  font-size: 20px;
+  color: var(---black);
+  font-weight: 500;
+  line-height: 50px;
+}
+.home-page .matters .image img{
+  height: 250px;
+  width: 450px;
+  margin-right: 50px;
+  border-radius: 30px;
+}
+.home-page .how-to {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.home-page .how-to h1 {
+  font-size: 50px;
+  color: var(---green);
+  font-weight: 800;
+  text-align: center;
+  margin-top: 20px;
+}
+.home-page .how-to .steps-info {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
+  padding: 20px;
+}
+.home-page .how-to .steps ul li {
+  list-style-type: disc;
+  line-height: 6.2vh;
+  font-size: 20px;
+
+}
+.home-page .how-to .step-text p {
+  font-size: 20px;
+}
+.home-page .get-involve {
+  display: flex;
+  flex-direction: column;
+}
+.home-page .get-involve h1{
+  font-size: 50px;
+  color: var(---green);
+  font-weight: 800;
+  text-align: center;
+}
+.home-page .get-involve .get-involve-test{
+  display: flex;
+ justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+.home-page .get-involve .get-involve-text p {
+   text-align: center;
+   font-size: 20px;
+   font-weight: 500;
+}
+.home-page .end-text {
+  margin-top: 30px;
+  font-size: 25px;
+  font-weight: 500;
+  color: var(---blue);
+  text-align: center;
+  margin-bottom: 30px;
+}
+.home-page footer {
+  height: 10vh;
+  background-color: lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home-page footer p {
+  margin-top: 20px;
+  text-align: center;
+  align-items: center;
+  font-weight: 500;
+}
 /* register pages css */
 
 .register-page {
@@ -99,8 +268,7 @@ code {
   flex-direction: column;
 }
 .register-page .register-content {
-  margin-top: 30px;
- 
+  margin-top: 80px;
 }
 .register-page  .reg-header {
   display: flex;
@@ -159,6 +327,18 @@ code {
   display: flex;
   flex-direction: column;
 }
+.login-page .login-content {
+  margin-top: 80px;
+  margin: 80px auto;
+}
+.login-page  .log-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 23px;
+  font-weight: 500;
+}
 .login-page .login-form{
   margin: 0 auto;
 }
@@ -166,6 +346,7 @@ code {
 .login-page form {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 .login-page form  input {
