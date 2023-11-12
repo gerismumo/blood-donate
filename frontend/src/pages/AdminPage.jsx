@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 function AdminPage(){
     const navigate = useNavigate();
     const[usersList, setUsersList] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleHomeTab = () => {
         navigate('/');
@@ -24,7 +26,21 @@ function AdminPage(){
     useEffect(() => {
         usersData();
     },[]);
-    const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);
+
+    const updatedList = usersList ? 
+    usersList.filter((user) => {
+        return (
+            user.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.blood_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_gender.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.user_phone.toLowerCase().includes(searchQuery.toLowerCase())||
+            user.user_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.user_county.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    }): [];
+    // const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);
     // console.log('filteredList',filteredList);
 
     const handleDeleteUser = async(userId) => {
@@ -45,51 +61,64 @@ function AdminPage(){
     }
 
     return (
-        <div className="admin-page">
-            <div className="main-header">
-                <nav>
-                    <div className="logo">
-                        <h2>Blood Donate</h2>
-                    </div>
-                    <div className="links">
-                        <button onClick={handleHomeTab}>Home</button>
-                    </div>
-                </nav>
-            </div>
-            <div className="admin-page-content">
-                <div className="users-table">
-                    <table>
-                        <thead>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Gender</th>
-                            <th>County</th>
-                            <th>Category</th>
-                            <th>Blood Group</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            {filteredList.map(user => (
-                                <tr key={user.user_id}>
-                                    <td>{user.first_name}</td>
-                                    <td>{user.last_name}</td>
-                                    <td>{user.user_email}</td>
-                                    <td>{user.user_phone}</td>
-                                    <td>{user.user_gender}</td>
-                                    <td>{user.user_county}</td>
-                                    <td>{user.user_type}</td>
-                                    <td>{user.blood_type}</td>
-                                    <td><button onClick={() => handleDeleteUser(user.user_id)}>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+        <>
+            <div className="admin-page">
+                <div className="main-header">
+                    <nav>
+                        <div className="logo">
+                            <h2>Blood Donate</h2>
+                        </div>
+                        <div className="search-input">
+                            <input
+                            type="text" 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder='Search...'
+                            />
+                        </div>
+                        <div className="links">
+                            <button onClick={handleHomeTab}>Home</button>
+                        </div>
+                    </nav>
                 </div>
-            </div>
+                <div className="admin-page-content">
+                    <h1>Users List</h1>
+                    <div className="users-table">
+                        <table>
+                            <thead>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Gender</th>
+                                <th>County</th>
+                                <th>Category</th>
+                                <th>Blood Group</th>
+                                <th>Delete</th>
+                            </thead>
+                            <tbody>
+                                {updatedList.map(user => (
+                                    <tr key={user.user_id}>
+                                        <td>{user.first_name}</td>
+                                        <td>{user.last_name}</td>
+                                        <td>{user.user_email}</td>
+                                        <td>{user.user_phone}</td>
+                                        <td>{user.user_gender}</td>
+                                        <td>{user.user_county}</td>
+                                        <td>{user.user_type}</td>
+                                        <td>{user.blood_type}</td>
+                                        <td><button onClick={() => handleDeleteUser(user.user_id)}>Delete</button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        </div>
+            </div>
+            <Footer />
+        </>
+        
     )
 }
 

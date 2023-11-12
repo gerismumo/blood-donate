@@ -508,3 +508,63 @@ align-items: center;
 .users-cards .card-text span{
   color: var(---blue);
 }
+
+/* admin page css */
+.admin-page {
+  display: flex;
+  flex-direction: column;
+}
+.admin-page-content {
+  padding: 20px;
+  margin-top: 90px;
+}
+.admin-page-content h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(---green);
+  text-align: center;
+}
+
+.users-table {
+  overflow-x: auto;
+}
+
+.admin-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.admin-page thead {
+  background-color: var(---green);
+  color: #ffffff;
+  text-align: left;
+}
+
+.admin-page th, 
+.admin-page td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-page tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.admin-page table button {
+  background-color: #e74c3c;
+  color: #ffffff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-page table button:hover {
+  background-color: #c0392b;
+}
