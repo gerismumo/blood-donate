@@ -15,9 +15,18 @@ router.get('/countiesData', (req, res) => {
 router.post('/registerUser', async(req, res) => {
     try {
         const {requestData} = req.body;
-        console.log(requestData);
-        const data = await controller.registerUser(requestData);
-        res.json({success: true});
+        // console.log(requestData);
+        const email = requestData.email;
+        console.log(email);
+        const databaseEmail = await controller.loginUser(email);
+        if(databaseEmail.length > 0){
+            // console.log('Email already exists');
+            req.json({message: 'Email already exists'});
+            
+        }else {
+             await controller.registerUser(requestData);
+            res.json({success: true});
+        }
     } catch (error) {
         res.json({success: false, error: error.message});
     }
