@@ -126,7 +126,7 @@ function Questions(){
                             <select name="page" id="page" value={selectedPage} onChange={handlePageChange}>
                                 <option value="">Select a Page</option>
                                 <option value='/usersPage'>Users Page</option>
-                                <option value="/questionsPage">Questions Page</option>
+                                <option value="/questionsPage">Donor Questions</option>
                                 <option value="/receiverQuestions">Receiver Questions</option>
                             </select>
                         </div>
