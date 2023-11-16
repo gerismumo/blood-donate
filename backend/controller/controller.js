@@ -107,7 +107,8 @@ const controller = {
             console.error(error);
         }
     },
-    donorQuestions: async (donorQuizes, userId)  => {
+    donorQuestions: async (userId, donorQuizes)  => {
+        // console.log(userId);
         try {
             const age = donorQuizes.age;
             const weight = donorQuizes.weight;
@@ -115,12 +116,11 @@ const controller = {
             const history = donorQuizes.history;
 
             const connection = await createConnection();
-            const query = `
-            INSERT INTO donor_questions (user_id, age, weight, frequency, history)
-            VALUES (?, ?, ?, ?, ?)
-          `;
+            const query = 'INSERT INTO donor_questions (user_id, age, weight, frequency, history) VALUES (?, ?, ?, ?, ?)';
+          
 
             const insertQuestions = await new Promise((resolve, reject) => {
+
                 connection.query(query,[userId ,age, weight, frequency, history], (err, result) => {
                     if(err) {
                         reject(err);

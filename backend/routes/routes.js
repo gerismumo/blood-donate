@@ -5,14 +5,6 @@ const controller = require('../controller/controller');
 
 
 
-//   app.use(function (req, res, next) {
-//     if (!req.session) {
-//       req.session = {
-//         email: null,
-//       };
-//     }
-//     next();
-//   });
 
 router.get('/countiesData', (req, res) => {
     try {
