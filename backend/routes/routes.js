@@ -71,13 +71,21 @@ router.post('/loginType', async(req, res)=> {
         const bloodType = loginType.bloodType;
 
         console.log(loginAs);
+        console.log(bloodType);
         console.log(loginEmail);
-        await controller.updateLogin(loginAs,bloodType, loginEmail);
-        res.json({success: true, message:'Successifully selected'});
+        const data = await controller.updateLogin(loginAs,bloodType, loginEmail);
+        res.json({success: true, data: data});
     } catch(error) {
         console.log(error.message);
     }
 });
+
+router.post('/insertDonorQuestions', async (req, res) => {
+    const {donorQuizes} = req.body;
+    console.log(donorQuizes);
+});
+
+router.post('/insertReceiverQuestions')
 
 router.get('/usersList', async(req, res) => {
     try {
@@ -98,6 +106,8 @@ router.delete('/deleteUser/:userId', async(req, res) => {
         res.json({success: false, error: error.message});
         console.log(error)
     }
-})
+});
+
+
 
 module.exports = router;

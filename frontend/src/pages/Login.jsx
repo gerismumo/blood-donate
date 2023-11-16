@@ -10,6 +10,8 @@ function Login() {
   const navigate = useNavigate();
   const[loginSuccess, setLoginSuccess] = useState(false);
   const[loginForm, setLoginForm] = useState(true);
+  const[donorQuestions, setDonorQuestions] = useState(false);
+  const[receiverQuestions, setReceiverQuestions] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -53,9 +55,9 @@ function Login() {
           const userType = loginDetail[0].user_type;
 
           if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
-             navigate('/receiversPage');
+            //  navigate('/receiversPage');
           }else if (bloodType !== null &&  userType !== null && userType === 'BloodRecipient') {
-            navigate('/donorsPage');
+            // navigate('/donorsPage');
           } else {
             setLoginForm(false); 
             setLoginSuccess(true);
@@ -103,9 +105,26 @@ function Login() {
             'Content-Type': 'application/json'
           }
         });
+
         const success =response.data.success;
+        const data = response.data.data;
+        console.log(data);
+        console.log(loginType);
+        const category = loginType.loginAs;
+
         if(success) {
-          navigate('/donorsPage');
+          if(category === 'BloodDonor') {
+            setLoginSuccess(false);
+            setDonorQuestions(true);
+            setReceiverQuestions(false);
+          } else if(category === 'BloodRecipient') {
+            setLoginSuccess(false);
+            setReceiverQuestions(true);
+            setDonorQuestions(false);
+          } else {
+            toast.error('Please select Blood Type');
+          }
+          // navigate('/donorsPage');
         }else {
           setLoginSuccess(false);
           setLoginForm(true);
@@ -116,8 +135,103 @@ function Login() {
       }
     }
     loginTypes();
-
   }
+
+  const [donorQuizes, setDonorQuizes] = useState({
+    age: '',
+    weight: '',
+    frequency: '',
+    history: '',
+  });
+
+  const questionsChange = (e) => {
+    const {name, value} = e.target;
+    setDonorQuizes((prevValue) => ({
+      ...prevValue,
+      [name]: value,
+    }));
+  }
+
+  const submitDonorQuestions = (e) => {
+    e.preventDefault();
+    const donorFields = ['age','weight', 'frequency', 'history'];
+
+      for(const field of donorFields) {
+        if(!donorQuizes[field]) {
+          toast.error(`Please provide a value for ${field}`);
+          return;
+        }
+      }
+      console.log(donorQuizes);
+
+      const donor_api_questions = `${process.env.REACT_APP_DATABASE_API}/api/insertDonorQuestions`;
+
+      const postDonor = async() => {
+        try {
+          const response = await axios.post(donor_api_questions, {
+            donorQuizes
+          }, {
+            headers: {
+              'Content-Type' : 'application/json'
+            }
+          });
+
+          console.log(response);
+
+        } catch (error) {
+          toast.error(error.message);
+        }
+      }
+      postDonor();
+  }
+
+  const[receiverQuizes, setReceiverQuizes] = useState({
+    allergy: '',
+    condition: '',
+    purpose: '',
+    requirements: '',
+  });
+
+  const receiverQuestionsChange = (e) => {
+    const {name, value} = e.target;
+    setReceiverQuizes((prevValue) => ({
+      ...prevValue,
+      [name]: value,
+    }));
+  }
+
+  const submitReceiverQuestions = (e) => {
+    e.preventDefault();
+
+    const receiverFields = ['allergy', 'condition', 'purpose', 'requirements'];
+
+    for (const field of receiverFields) {
+      if(!receiverQuizes[field]) {
+        toast.error(`Please provide a field for ${field}`);
+     }
+    }
+    console.log(receiverQuizes);
+
+    const receiver_api_questions = `${process.env.REACT_APP_DATABASE_API}/api/insertReceiverQuestions`;
+
+    const postReceiver = async () => {
+      try {
+        const response = await axios.post(receiver_api_questions, {
+          receiverQuizes
+        }, {
+          headers: {
+            'Content-Type' : 'application/json'
+          }
+        });
+
+        console.log(response);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+
+    postReceiver();
+}
 
   return (
     <>
@@ -184,6 +298,76 @@ function Login() {
             </div>
           </div>
         )}
+
+        {donorQuestions && (
+          <div className="login-as">
+            <h2>Questions</h2>
+            <div className="login-as-form">
+              <form onSubmit={submitDonorQuestions}>
+                 <label htmlFor="age">Age</label>
+                <input 
+                  type="number" 
+                  name='age' 
+                  min='0'
+                  onChange={questionsChange}
+                />
+                <label htmlFor="weight">Weight</label>
+                <input 
+                 type="number" 
+                 name='weight'
+                 min='0'  
+                 onChange={questionsChange}
+                 />
+                <label htmlFor="frequency">Frequency of Donations</label>
+                <select name="frequency" id="frequency" onChange={questionsChange}>
+                  <option value=""></option>
+                  <option value="Regular">Regular</option>
+                  <option value="Occasional">Occasional</option>
+                </select>
+                <label htmlFor="history">Health History</label>
+                <select name="history" id="history" onChange={questionsChange}>
+                  <option value=""></option>
+                  <option value="Recent Illness or Infection">Recent Illness or Infection</option>
+                  <option value="Medications Currently Taking">Medications Currently Taking</option>
+                  <option value="Recent Travels">Recent Travels</option>
+                </select>
+                <div className="button">
+                  <button type='submit'>Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {receiverQuestions && (
+          <div className="login-as">
+            <h2>Questions</h2>
+            <div className="login-as-form">
+              <form onSubmit={submitReceiverQuestions}>
+                <label htmlFor="allergy">Any Allergies or Sensitivities</label>
+                <select name="allergy" id="allergy" onChange={receiverQuestionsChange}>
+                  <option value=""></option>
+                  <option value="No">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+                <label htmlFor="condition">Any medical Condition Requiring Transfusion</label>
+                <select name="condition" id="condition" onChange={receiverQuestionsChange}>
+                  <option value=""></option>
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+                <label htmlFor="purpose">Purpose of the Blood Transfusion</label>
+                <textarea name="purpose" id="purpose" cols="30" rows="5" onChange={receiverQuestionsChange}></textarea>
+                <label htmlFor="requirements">Any special instructions or requirements</label>
+                <textarea name="requirements" id="requirements" cols="30" rows="5" onChange={receiverQuestionsChange}></textarea>
+                <div className="button">
+                  <button type='submit'>Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
          </div>  
       </div>
       <Footer />
