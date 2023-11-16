@@ -55,9 +55,9 @@ function Login() {
           const userType = loginDetail[0].user_type;
 
           if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
-            //  navigate('/receiversPage');
+             navigate('/receiversPage');
           }else if (bloodType !== null &&  userType !== null && userType === 'BloodRecipient') {
-            // navigate('/donorsPage');
+            navigate('/donorsPage');
           } else {
             setLoginForm(false); 
             setLoginSuccess(true);
@@ -177,6 +177,16 @@ function Login() {
           });
 
           console.log(response);
+          const success = response.data.success;
+        if(success) {
+          navigate('/receiversPage')
+        } else {
+          toast.error('Failed to submit'); 
+          setDonorQuestions(false);
+          setReceiverQuestions(false);
+          setLoginSuccess(false);
+          setLoginForm(true);
+        }
 
         } catch (error) {
           toast.error(error.message);
@@ -225,6 +235,16 @@ function Login() {
         });
 
         console.log(response);
+        const success = response.data.success;
+        if(success) {
+          navigate('/donorsPage')
+        } else {
+          toast.error('Failed to submit'); 
+          setDonorQuestions(false);
+          setReceiverQuestions(false);
+          setLoginSuccess(false);
+          setLoginForm(true);
+        }
       } catch (error) {
         toast.error(error.message);
       }

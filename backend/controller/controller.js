@@ -158,6 +158,44 @@ const controller = {
         } catch (error) {
             console.error(error);
         }
+    },
+    selectQuestionsId: async(loginId) => {
+        const connection = await createConnection();
+        try {
+            const queryOne = 'SELECT * FROM donor_questions WHERE user_id = ?';
+            const queryTwo = 'SELECT * FROM donor_questions WHERE user_id = ?';
+
+            const [questionsOne, questionsTwo] = await Promise.all([
+                new Promise((resolve, reject) => {
+                  connection.query(queryOne, [loginId], (err, result) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve(result);
+                    }
+                  });
+                }),
+                new Promise((resolve, reject) => {
+                  connection.query(queryTwo, [loginId], (err, result) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve(result);
+                    }
+                  });
+                }),
+              ]);
+          
+              console.log(questionsOne, questionsTwo);
+              return { questionsOne, questionsTwo };
+         
+    
+            
+            // console.log(questionsOne, questionsTwo );
+            // return { questionsOne, questionsTwo };
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 

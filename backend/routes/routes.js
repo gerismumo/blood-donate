@@ -62,6 +62,11 @@ router.post('/loginUser', async(req, res) => {
         console.log('pass',password);
         console.log(email, password);
         const login = await controller.loginUser(email);
+        // console.log('login',login);
+        // const loginId = login[0].user_id;
+        // const loginIdData = await controller.selectQuestionsId(loginId);
+        // console.log('loginIdData',loginIdData);
+        // console.log('loginId',loginId);
         if (login.length === 0) {
             res.json({ success: false, message: 'User does not exist' });
             console.log('User does not exist');
