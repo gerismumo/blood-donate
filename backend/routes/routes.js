@@ -1,10 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/controller');
+const session = require('express-session');
 
 
+const MemoryStore = require('memorystore')(session);
+const store = new MemoryStore({
+  checkPeriod: 86400000, // prune expired entries every 24h (in ms)
+});
 
-
+router.use(
+    session({
+      secret: 'your-secret-key', 
+      resave: false,
+      saveUninitialized: true,
+      store: store,
+      cookie: { secure: false }, 
+    })
+  );
 
 router.get('/countiesData', (req, res) => {
     try {
@@ -44,8 +57,7 @@ router.post('/loginUser', async(req, res) => {
         const email = formData.email;
         loginEmail = email;
         // req.session.save();
-        // req.session.email = email;
-        // console.log('Email', req.session.email );
+       
         const password = formData.password;
         console.log('pass',password);
         console.log(email, password);
@@ -59,6 +71,15 @@ router.post('/loginUser', async(req, res) => {
             res.json({success: false, message:'User does not exist'});
             console.log('User does not exist');
         }
+        if (!req.session) {
+            console.log('Session not initialized');
+            res.json({ success: false, message: 'Session not initialized' });
+            return;
+          }
+        // req.session.email = email;
+        // req.session.save();
+        // console.log('Email', req.session.email );
+        // console.log('Session', req.session);
         const userPassword = login[0].password;
         console.log(userPassword);
         if (password !== userPassword) {
@@ -75,11 +96,20 @@ router.post('/loginUser', async(req, res) => {
 
 router.post('/loginType', async(req, res)=> {
     try {
+        // console.log('Session', req.session);
         // if (!req.session.email) {
         //     console.log('Session not initialized or email not stored');
         //     res.json({ success: false, message: 'Session not initialized or email not stored' });
         //     return;
         //   }
+    //     if (!req.session) {
+    //   console.log('Session not initialized');
+    //   res.json({ success: false, message: 'Session not initialized' });
+    //   return;
+    // }
+        //   const email = req.session.email;
+        //   console.log('Email: ' , email);
+        // console.log('EmailOust', req.session.email );
         const {loginType} = req.body;
         const loginAs = loginType.loginAs;
         const bloodType = loginType.bloodType;
