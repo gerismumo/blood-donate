@@ -106,6 +106,58 @@ const controller = {
         } catch(error) {
             console.error(error);
         }
+    },
+    donorQuestions: async (donorQuizes, userId)  => {
+        try {
+            const age = donorQuizes.age;
+            const weight = donorQuizes.weight;
+            const frequency = donorQuizes.frequency;
+            const history = donorQuizes.history;
+
+            const connection = await createConnection();
+            const query = `
+            INSERT INTO donor_questions (user_id, age, weight, frequency, history)
+            VALUES (?, ?, ?, ?, ?)
+          `;
+
+            const insertQuestions = await new Promise((resolve, reject) => {
+                connection.query(query,[userId ,age, weight, frequency, history], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(result);
+                    }
+                });
+            });
+            return insertQuestions;
+        } catch(error) {
+            console.error(error);
+        }
+    },
+    receiverQuestions: async(userId, receiverQuizes) => {
+        try {
+            const allergy = receiverQuizes.allergy;
+            const condition = receiverQuizes.condition;
+            const purpose = receiverQuizes.purpose;
+            const requirements = receiverQuizes.requirements;
+
+            const connection = await createConnection();
+            const query = 'INSERT INTO receiver_questions (user_id, allergy, condition_user, purpose, requirements) VALUES (?,?,?,?,?)';
+
+            const insertQuestions = await new Promise((resolve, reject) => {
+                connection.query(query,[userId, allergy,condition, purpose, requirements], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(result);
+                    }
+                });
+            });
+            return insertQuestions;
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
