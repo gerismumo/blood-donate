@@ -163,7 +163,7 @@ const controller = {
         const connection = await createConnection();
         try {
             const queryOne = 'SELECT * FROM donor_questions WHERE user_id = ?';
-            const queryTwo = 'SELECT * FROM donor_questions WHERE user_id = ?';
+            const queryTwo = 'SELECT * FROM receiver_questions WHERE user_id = ?';
 
             const [questionsOne, questionsTwo] = await Promise.all([
                 new Promise((resolve, reject) => {
@@ -188,7 +188,6 @@ const controller = {
           
               console.log(questionsOne, questionsTwo);
               return { questionsOne, questionsTwo };
-         
     
             
             // console.log(questionsOne, questionsTwo );
@@ -196,7 +195,85 @@ const controller = {
         } catch (error) {
             console.error(error);
         }
-    }
+    },
+    selectDonorQuestions: async () => {
+        try {
+            const query = 'SELECT * FROM donor_questions';
+            const connection = await createConnection();
+
+            const selectQuestions = await new Promise((resolve, reject) => {
+                connection.query(query, (err, results) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(results);
+                    }
+                });
+            });
+            return selectQuestions;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    selectReceiverQuestions: async () => {
+        try {
+            const query = 'SELECT * FROM receiver_questions';
+            const connection = await createConnection();
+
+            const selectQuestions = await new Promise((resolve, reject) => {
+                connection.query(query, (err, results) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(results);
+                    }
+                });
+            });
+            return selectQuestions;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    deleteDonorQuestion: async (userId) => {
+        try {
+            const connection = await createConnection();
+            const query = 'DELETE FROM donor_questions WHERE user_id = ?';
+ 
+            const delUser = await new Promise((resolve, reject) => {
+                connection.query(query,[userId], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(result);
+                       
+                    }
+                });
+            });
+            return delUser;
+        } catch(error) {
+            console.error(error);
+        }
+    },
+    deleteReceiverQuestion: async (userId) => {
+        try {
+            const connection = await createConnection();
+            const query = 'DELETE FROM receiver_questions WHERE user_id = ?';
+ 
+            const delUser = await new Promise((resolve, reject) => {
+                connection.query(query,[userId], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else{
+                        resolve(result);
+                       
+                    }
+                });
+            });
+            return delUser;
+        } catch(error) {
+            console.error(error);
+        }
+    },
 }
 
 module.exports = controller;

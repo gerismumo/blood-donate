@@ -3,7 +3,9 @@ import AdminPage from './pages/AdminPage';
 import Donor from './pages/Donor';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Questions from './pages/Questions';
 import Receiver from './pages/Receiver';
+import ReceiverQuiz from './pages/ReceiverQuiz';
 import Register from './pages/Register';
 function App() {
   return (
@@ -13,8 +15,10 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/donorsPage' element={<Donor />} />
-        <Route path='/adminPage' element={<AdminPage />} />
+        <Route path='/usersPage' element={<AdminPage />} />
         <Route path='/receiversPage' element={<Receiver />} />
+        <Route path='/questionsPage' element={<Questions />} />
+        <Route path='/receiverQuestions' element={<ReceiverQuiz />} />
       </Routes>
     </Router>
   );

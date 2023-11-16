@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
-function AdminPage(){
+function Questions(){
     const navigate = useNavigate();
     const[usersList, setUsersList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [donorQuestions, setDonorQuestions] = useState([]);
 
     const handleHomeTab = () => {
         navigate('/');
@@ -26,32 +27,65 @@ function AdminPage(){
     useEffect(() => {
         usersData();
     },[]);
+    console.log('usersList',usersList);
+    const donor_api = `${process.env.REACT_APP_DATABASE_API}/api/donorQuestions`;
 
-    const updatedList = usersList ? 
-    usersList.filter((user) => {
+    const donorData = async () => {
+        try {
+            const response = await axios.get(donor_api);
+            setDonorQuestions(response.data.data);
+        }catch(error) {
+            console.log(error);
+        }
+    }
+   
+    useEffect(() => {
+        donorData();
+    },[]);
+
+    console.log('donor', donorQuestions);
+
+    const combinedData = donorQuestions.map((donorObj) => {
+        // Find the corresponding user object in usersList
+        const matchingUser = usersList.find((userObj) => userObj.user_id === donorObj.user_id);
+      
+        // Return a new object combining information from donor and usersList
+        return {
+          user_id: donorObj.user_id,
+          age: donorObj.age,
+          weight: donorObj.weight,
+          frequency: donorObj.frequency,
+          history: donorObj.history,
+          first_name: matchingUser ? matchingUser.first_name : null,
+          last_name: matchingUser ? matchingUser.last_name : null,
+        };
+      });
+      
+      console.log('combinedData',combinedData);
+
+    const updatedList = combinedData ? 
+    combinedData.filter((data) => {
         return (
-            user.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.blood_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_gender.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.user_phone.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.user_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_county.toLowerCase().includes(searchQuery.toLowerCase())
+            data.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
+            data.last_name.toLowerCase().includes(searchQuery.toLowerCase())||
+            data.weight.toString().toLowerCase().includes(searchQuery.toLowerCase())||
+            data.age.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+            data.frequency.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            data.history.toLowerCase().includes(searchQuery.toLowerCase())     
         )
     }): [];
     // const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);
     // console.log('filteredList',filteredList);
 
-    const handleDeleteUser = async(userId) => {
+    const handleDelete = async(userId) => {
         console.log('handleDeleteUser',userId);
-        const delete_api = `${process.env.REACT_APP_DATABASE_API}/api/deleteUser/${userId}`;
+        const delete_api = `${process.env.REACT_APP_DATABASE_API}/api/deleteDonorQuestion/${userId}`;
         console.log('delete_api',delete_api);
         const deleteUser = async() => {
             try {
                 const response = await axios.delete(delete_api);
                 console.log(response);
-                await usersData();
+                await donorData();
 
             } catch(error) {
                 console.log(error);
@@ -59,7 +93,7 @@ function AdminPage(){
         }
         deleteUser();
     }
-
+    
     const [selectedPage, setSelectedPage] = useState('');
 
     const handlePageChange = (event) => {
@@ -71,6 +105,7 @@ function AdminPage(){
             navigate(selectedValue);
         }
     };
+
     return (
         <>
             <div className="admin-page">
@@ -92,6 +127,7 @@ function AdminPage(){
                                 <option value="">Select a Page</option>
                                 <option value='/usersPage'>Users Page</option>
                                 <option value="/questionsPage">Questions Page</option>
+                                <option value="/receiverQuestions">Receiver Questions</option>
                             </select>
                         </div>
                         <div className="links">
@@ -100,18 +136,16 @@ function AdminPage(){
                     </nav>
                 </div>
                 <div className="admin-page-content">
-                    <h1>Users List</h1>
+                    <h1>Donors Questions List</h1>
                     <div className="users-table">
                         <table>
                             <thead>
-                                <th>First Name</th>
+                                <th>Fist Name</th>
                                 <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Gender</th>
-                                <th>County</th>
-                                <th>Category</th>
-                                <th>Blood Group</th>
+                                <th>Weight</th>
+                                <th>Age</th>
+                                <th>Frequency</th>
+                                <th>History</th>
                                 <th>Delete</th>
                             </thead>
                             <tbody>
@@ -119,13 +153,11 @@ function AdminPage(){
                                     <tr key={user.user_id}>
                                         <td>{user.first_name}</td>
                                         <td>{user.last_name}</td>
-                                        <td>{user.user_email}</td>
-                                        <td>{user.user_phone}</td>
-                                        <td>{user.user_gender}</td>
-                                        <td>{user.user_county}</td>
-                                        <td>{user.user_type}</td>
-                                        <td>{user.blood_type}</td>
-                                        <td><button onClick={() => handleDeleteUser(user.user_id)}>Delete</button></td>
+                                        <td>{user.weight}</td>
+                                        <td>{user.age}</td>
+                                        <td>{user.frequency}</td>
+                                        <td>{user.history}</td>
+                                        <td><button onClick={() => handleDelete(user.user_id)}>Delete</button></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -140,4 +172,4 @@ function AdminPage(){
     )
 }
 
-export default AdminPage;
+export default Questions;

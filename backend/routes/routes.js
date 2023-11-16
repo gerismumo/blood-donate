@@ -186,5 +186,47 @@ router.delete('/deleteUser/:userId', async(req, res) => {
 });
 
 
+router.get('/donorQuestions', async(req, res) => {
+    try {
+        const data = await controller.selectDonorQuestions();
+        res.json({success: true, data: data});
+    } catch(error) {
+        res.json({success: false, error: error.message});
+        console.log(error)
+    }
+});
+
+router.get('/receiverQuestions', async(req, res) => {
+    try {
+        const data = await controller.selectReceiverQuestions();
+        res.json({success: true, data: data});
+    }catch (error) {
+        res.json({success: false, error: error.message});
+        console.log(error);
+    }
+});
+
+router.delete('/deleteDonorQuestion/:userId', async(req, res) => {
+    const {userId} = req.params;
+    try {
+        await controller.deleteDonorQuestion(userId);
+        res.json({success: true});
+    } catch(error) {
+        res.json({success: false});
+        console.log(error);
+    }
+});
+
+router.delete('/deleteReceiverQuestion/:userId', async(req, res) => {
+    const {userId} = req.params;
+    try {
+        await controller.deleteReceiverQuestion(userId);
+        res.json({success: true});
+    } catch(error) {
+        res.json({success: false});
+        console.log(error);
+    }
+})
+
 
 module.exports = router;
