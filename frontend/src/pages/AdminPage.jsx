@@ -4,9 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
 function AdminPage(){
+    let user = JSON.parse(localStorage.getItem('donateUser'));
     const navigate = useNavigate();
     const[usersList, setUsersList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    if(!user) {
+        navigate('/');
+    }
+
+    const logout = () => {
+        localStorage.removeItem('donateUser');
+        navigate('/');
+    }
 
     const handleHomeTab = () => {
         navigate('/');
@@ -96,6 +105,9 @@ function AdminPage(){
                         </div>
                         <div className="links">
                             <button onClick={handleHomeTab}>Home</button>
+                        </div>
+                        <div className="logout">
+                            <button onClick={logout()}>Logout</button>
                         </div>
                     </nav>
                 </div>

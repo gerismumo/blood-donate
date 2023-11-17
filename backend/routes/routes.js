@@ -61,37 +61,54 @@ router.post('/loginUser', async(req, res) => {
         const password = formData.password;
         console.log('pass',password);
         console.log(email, password);
+        const Admin = await controller.loginAdmin(email);
+        console.log(Admin);
         const login = await controller.loginUser(email);
-        // console.log('login',login);
-        // const loginId = login[0].user_id;
-        // const loginIdData = await controller.selectQuestionsId(loginId);
-        // console.log('loginIdData',loginIdData);
-        // console.log('loginId',loginId);
-        if (login.length === 0) {
-            res.json({ success: false, message: 'User does not exist' });
-            console.log('User does not exist');
-            return;
-        }
-        if(!login) {
-            res.json({success: false, message:'User does not exist'});
-            console.log('User does not exist');
-        }
-        if (!req.session) {
-            console.log('Session not initialized');
-            res.json({ success: false, message: 'Session not initialized' });
-            return;
-          }
-        // req.session.email = email;
-        // req.session.save();
-        // console.log('Email', req.session.email );
-        // console.log('Session', req.session);
-        const userPassword = login[0].password;
-        console.log(userPassword);
-        if (password !== userPassword) {
-            res.json({success: false, message: 'Password does not match'});
+        console.log(login);
+        if(login.length > 0) {
+            // if (login.length === 0) {
+            //     res.json({ success: false, message: 'User does not exist' });
+            //     console.log('User does not exist');
+            //     return;
+            // }
+            if(!login) {
+                res.json({success: false, message:'User does not exist'});
+                console.log('User does not exist');
+            }
+            if (!req.session) {
+                console.log('Session not initialized');
+                res.json({ success: false, message: 'Session not initialized' });
+                return;
+              }
+            const userPassword = login[0].password;
+            console.log(userPassword);
+            if (password !== userPassword) {
+                res.json({success: false, message: 'Password does not match'});
+            } else {
+                res.json({success: true, data: login}); 
+            }
         } else {
-            res.json({success: true, data: login}); 
+            if (Admin.length === 0) {
+                res.json({ success: false, message: 'User does not exist' });
+                console.log('User does not exist');
+                return;
+            }
+            if(!Admin) {
+                res.json({success: false, message:'User does not exist'});
+                console.log('User does not exist');
+            }
+            
+            const userPassword = Admin[0].password;
+            console.log('admin pass',userPassword);
+            if (password !== userPassword) {
+                console.log('password mismatch')
+                res.json({success: false, message: 'Password does not match'});
+            } else {
+                res.json({success: true, data: Admin}); 
+                console.log('Password succesifully login in');
+            }
         }
+        
     }catch(error) {
         console.log(error.message);
     }

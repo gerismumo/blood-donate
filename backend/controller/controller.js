@@ -50,6 +50,25 @@ const controller = {
             console.error(error);
         }
     },
+    loginAdmin: async(email) => {
+        try {
+            const connection = await createConnection();
+            const query = 'SELECT * FROM admin_table WHERE email = ?';
+
+            const loginUser = await new Promise((resolve, reject) => {
+                connection.query(query, [email], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    }else {
+                        resolve(result);
+                    }
+                });
+            });
+            return loginUser;
+        } catch(error) {
+            console.error(error);
+        }
+    },
     updateLogin: async (loginAs,bloodType, loginEmail) => {
         try {
             const connection = await createConnection();

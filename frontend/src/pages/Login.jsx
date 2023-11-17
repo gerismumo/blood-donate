@@ -37,7 +37,7 @@ function Login() {
             }
             }
     
-    console.log(formData);
+    // console.log(formData);
     const login = `${process.env.REACT_APP_DATABASE_API}/api/loginUser`;
 
     const LoginData = async() => {
@@ -48,26 +48,34 @@ function Login() {
           'Content-Type': 'application/json'
         });
         const success = response.data.success;
+
         if(success) {
           const loginDetail = response.data.data;
-          // console.log(loginDetail);
+          localStorage.setItem('donateUser', JSON.stringify(loginDetail));
+          let user = JSON.parse(localStorage.getItem('donateUser'));
+          console.log('user', user);
           const bloodType = loginDetail[0].blood_type;
           const userType = loginDetail[0].user_type;
 
-          if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
-             navigate('/receiversPage');
-          }else if (bloodType !== null &&  userType !== null && userType === 'BloodRecipient') {
-            navigate('/donorsPage');
-          } else {
-            setLoginForm(false); 
-            setLoginSuccess(true);
+          if(loginDetail[0].role === 'admin') {
+            navigate('/usersPage');
+          }else {
+            if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
+              navigate('/receiversPage');
+            }else if (bloodType !== null &&  userType !== null && userType === 'BloodRecipient') {
+              navigate('/donorsPage');
+            } else {
+              setLoginForm(false); 
+              setLoginSuccess(true);
+            }
           }
-          // console.log('successifully logged in');
+        } else {
+          toast.error('Wrong credentials! please try again')
         }
        
        
       } catch (error) {
-        console.log(error);
+        toast.error(error.message);
       }
     }
     LoginData();
