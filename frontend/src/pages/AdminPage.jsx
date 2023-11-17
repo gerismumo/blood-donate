@@ -95,7 +95,7 @@ function AdminPage(){
                 <div className="main-header">
                     <nav>
                         <div className="logo">
-                            <h2>Blood Donate</h2>
+                            <h2>Blood Connect</h2>
                         </div>
                         <div className="search-input">
                             <input
