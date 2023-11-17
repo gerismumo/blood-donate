@@ -19,7 +19,7 @@ function Receiver() {
         }else {
             setIsAuthenticated(true);
         }
-    },[user]);
+    },[user,navigate]);
     
     const logout = () => {
         localStorage.removeItem('donateUser');

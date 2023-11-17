@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 function Home () {
     const navigate = useNavigate();
+    const[openDonate, setOpenDonate] = useState(false);
     const handleLoginLink = () => {
         navigate('/login');
     }
     const handleRegister =() => {
         navigate('/register');
+    }
+
+    const handleAccounts =() => {
+        setOpenDonate(!openDonate);
     }
     return (
         <div className="home-page">
@@ -22,13 +27,21 @@ function Home () {
                             <a href="#service">Services</a>
                             <a href="#howto">How to?</a>
                         </div>
-                        <div className="accounts">
-                            <button onClick={handleLoginLink}>Login</button>
-                            <button onClick={handleRegister}>Register</button>
+                        <div className="donate">
+                            <button onClick={handleAccounts}>{openDonate ? 'CLOSE': 'DONATE'}</button>
                         </div>
+                        
                     </div>
                 </nav>
             </div>
+            {openDonate && (
+                <>
+                    <div className="accounts">
+                        <button onClick={handleLoginLink}>Login</button>
+                        <button onClick={handleRegister}>Register</button>
+                    </div>
+                </>
+            )}
             <div className="home-content">
             <section className="about" id="about">
                 <div className="container">

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
@@ -18,7 +18,7 @@ function ReceiverQuiz(){
         }else {
             setIsAuthenticated(true);
         }
-    },[user]);
+    },[user, navigate]);
     
     const logout = () => {
         localStorage.removeItem('donateUser');
@@ -31,33 +31,33 @@ function ReceiverQuiz(){
 
     const users_api = `${process.env.REACT_APP_DATABASE_API}/api/usersList`;
 
-    const usersData = async () => {
+    const usersData =  useCallback(async () => {
         try {
             const response = await axios.get(users_api);
             setUsersList(response.data.data);
         }catch(error) {
             console.log(error);
         }
-    }
+    },[users_api])
    
     useEffect(() => {
-        usersData();
-    },[]);
-    console.log('usersList',usersList);
+        usersData(); 
+    },[usersData]);
+    // console.log('usersList',usersList);
     const donor_api = `${process.env.REACT_APP_DATABASE_API}/api/receiverQuestions`;
 
-    const donorData = async () => {
+    const donorData = useCallback(async () => {
         try {
             const response = await axios.get(donor_api);
             setDonorQuestions(response.data.data);
         }catch(error) {
             console.log(error);
         }
-    }
+    },[donor_api]);
    
     useEffect(() => {
         donorData();
-    },[]);
+    },[donorData]);
 
     console.log('donor', donorQuestions);
 

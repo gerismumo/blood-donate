@@ -63,6 +63,29 @@ code {
 .main-header .links button:hover {
   color: var(---black);
 }
+
+@media screen and (max-width: 800px) {
+  .main-header .logo {
+    margin-left: 10px;
+  }
+  .main-header .logo h2{
+    font-size: 20px;
+  }
+  .main-header .links {
+    margin-right: 5px;
+    gap: 10px;
+  }
+  .main-header input {
+    width: 100px;
+  }
+  .main-header select {
+    width: 100px;
+  }
+  .main-header .select-page {
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+}
 .home-page {
   display: flex;
   flex-direction: column;
@@ -103,7 +126,7 @@ code {
 .home-page .accounts {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 10px;
   margin-right: 30px;
 }
 .home-page a, button{
@@ -119,6 +142,55 @@ code {
   color: var(---black);
 }
 
+.donate {
+  margin-right: 20px;
+}
+.donate button {
+  background-color: red;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+.donate button:hover {
+  background-color: rgb(178, 4, 4);
+}
+.accounts {
+  margin-top: 80px;
+  position: absolute;
+  right: 10px; 
+  background-color: #fff; 
+  border: 1px solid #ccc; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 10px;
+}
+
+.accounts button {
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: var(---blue);
+  color: var(---white);
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 3px;
+}
+
+.accounts button:hover {
+  background-color: var(---hoverBlue);
+  color: var(---black);
+}
+
+.home-page .home-content {
+  padding: 20px;
+}
 .home-page .about{
   background-color: transparent;
   margin-top: 80px;
@@ -250,6 +322,36 @@ code {
   color: var(---blue);
   text-align: center;
   margin-bottom: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .home-page .logo{
+    margin-left: 10px;
+  }
+  .home-page .logo h2{
+    font-size: 18px;
+  }
+  .home-page .links-account {
+    gap: 40px;
+  }
+  .home-page .links{
+    gap: 10px;
+  }
+  .accounts {
+    margin-top: 90px;
+  }
+  .home-page .about .container{
+    flex-direction: column;
+  }
+  .home-page .about .category-type{
+    flex-direction: column;
+  }
+  .home-page .matters .container {
+    flex-direction: column;
+  }
+  .home-page .how-to .steps-info {
+    flex-direction: column;
+  }
 }
 
 /* footer css */
@@ -385,6 +487,10 @@ code {
   border: 1px solid #09b1f3;
   border-radius: 3px;
   height: 4.5vh;
+  width: 250px;
+}
+.login-page form  input{
+  padding: 10px;
 }
 .login-page form label{
   margin-bottom: 10px;
@@ -507,6 +613,18 @@ align-items: center;
 }
 .users-cards .card-text span{
   color: var(---blue);
+}
+
+@media screen and (max-width: 800px) {
+  .users-cards {
+    width: 200px;
+  }
+}
+
+@media screen and (min-width: 469) {
+  .cards{
+    justify-content: center;
+  }
 }
 
 /* admin page css */

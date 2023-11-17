@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
@@ -17,7 +17,7 @@ function AdminPage(){
         }else {
             setIsAuthenticated(true);
         }
-    },[user]);
+    },[user, navigate]);
 
     const logout = () => {
         localStorage.removeItem('donateUser');
@@ -30,18 +30,18 @@ function AdminPage(){
 
     const users_api = `${process.env.REACT_APP_DATABASE_API}/api/usersList`;
 
-    const usersData = async () => {
+    const usersData = useCallback(async () => {
         try {
             const response = await axios.get(users_api);
             setUsersList(response.data.data);
         }catch(error) {
             console.log(error);
         }
-    }
+    },[users_api]);
    
     useEffect(() => {
         usersData();
-    },[]);
+    },[usersData]);
 
     const updatedList = usersList ? 
     usersList.filter((user) => {
