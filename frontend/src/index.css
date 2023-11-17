@@ -333,12 +333,16 @@ code {
 @media screen and (max-width: 800px) {
   .home-page .logo{
     margin-left: 10px;
+    margin-right: 10px;
   }
   .home-page .logo h2{
-    font-size: 18px;
+    font-size: 20px;
   }
   .home-page .links-account {
     gap: 40px;
+  }
+  .home-page a, button{
+    font-size: 15px;
   }
   .home-page .links{
     gap: 10px;
