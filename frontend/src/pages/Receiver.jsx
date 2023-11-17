@@ -8,8 +8,23 @@ function Receiver() {
     const[usersList, setUsersList] = useState([]);
     // const [filteredList, setFilteredList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    let user = JSON.parse(localStorage.getItem('donateUser'));
+    // console.log('user',user);
+    useEffect(() => {
+        if(user === null) {
+            navigate('/');    
+        }else if(user[0].user_type !== 'BloodDonor') {
+            navigate('/');
+        }else {
+            setIsAuthenticated(true);
+        }
+    },[user]);
+    
+    const logout = () => {
+        localStorage.removeItem('donateUser');
+        navigate('/');
+    }
     const handleHomeTab = () => {
         navigate('/');
     }
@@ -50,7 +65,9 @@ function Receiver() {
     console.log('filteredList',updatedList);
     return(
         <>
-        <div className="donor-page">
+        {isAuthenticated && (
+            <>
+            <div className="donor-page">
         <div className="main-header">
             <nav>
                 <div className="logo">
@@ -66,6 +83,9 @@ function Receiver() {
                 </div>
                 <div className="links">
                     <button onClick={handleHomeTab}>Home</button>
+                </div>
+                <div className="links">
+                    <button onClick={logout}>Logout</button>
                 </div>
             </nav>
         </div>
@@ -112,6 +132,8 @@ function Receiver() {
             </div>
         </div>
         <Footer />
+            </>
+        )}
         </>
     )
 }

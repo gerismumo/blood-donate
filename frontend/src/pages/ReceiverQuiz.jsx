@@ -8,6 +8,22 @@ function ReceiverQuiz(){
     const[usersList, setUsersList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [donorQuestions, setDonorQuestions] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    let user = JSON.parse(localStorage.getItem('donateUser'));
+    useEffect(() => {
+        if(user === null) {
+            navigate('/');    
+        }else if(user[0].role === 'user') {
+            navigate('/');
+        }else {
+            setIsAuthenticated(true);
+        }
+    },[user]);
+    
+    const logout = () => {
+        localStorage.removeItem('donateUser');
+        navigate('/');
+    }
 
     const handleHomeTab = () => {
         navigate('/');
@@ -108,7 +124,9 @@ function ReceiverQuiz(){
 
     return (
         <>
-            <div className="admin-page">
+        {isAuthenticated && (
+            <>
+             <div className="admin-page">
                 <div className="main-header">
                     <nav>
                         <div className="logo">
@@ -132,6 +150,9 @@ function ReceiverQuiz(){
                         </div>
                         <div className="links">
                             <button onClick={handleHomeTab}>Home</button>
+                        </div>
+                        <div className="links">
+                            <button onClick={logout}>Logout</button>
                         </div>
                     </nav>
                 </div>
@@ -167,6 +188,9 @@ function ReceiverQuiz(){
 
             </div>
             <Footer />
+            </>
+        )}
+           
         </>
         
     )

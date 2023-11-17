@@ -48,16 +48,17 @@ function Login() {
           'Content-Type': 'application/json'
         });
         const success = response.data.success;
+        console.log('success',success)
 
         if(success) {
           const loginDetail = response.data.data;
           localStorage.setItem('donateUser', JSON.stringify(loginDetail));
           let user = JSON.parse(localStorage.getItem('donateUser'));
           console.log('user', user);
-          const bloodType = loginDetail[0].blood_type;
-          const userType = loginDetail[0].user_type;
+          const bloodType = user[0].blood_type;
+          const userType = user[0].user_type;
 
-          if(loginDetail[0].role === 'admin') {
+          if(user[0].role === 'admin') {
             navigate('/usersPage');
           }else {
             if(bloodType !== null &&  userType !== null && userType === 'BloodDonor') {
@@ -187,7 +188,12 @@ function Login() {
           console.log(response);
           const success = response.data.success;
         if(success) {
-          navigate('/receiversPage')
+          // await handleSubmit();
+          // navigate('/receiversPage')
+          setLoginForm(true);
+          setDonorQuestions(false);
+          setReceiverQuestions(false);
+          setLoginSuccess(false);
         } else {
           toast.error('Failed to submit'); 
           setDonorQuestions(false);
@@ -245,7 +251,11 @@ function Login() {
         console.log(response);
         const success = response.data.success;
         if(success) {
-          navigate('/donorsPage')
+          // await handleSubmit();
+          setLoginForm(true);
+          setDonorQuestions(false);
+          setReceiverQuestions(false);
+          setLoginSuccess(false);
         } else {
           toast.error('Failed to submit'); 
           setDonorQuestions(false);

@@ -61,10 +61,13 @@ router.post('/loginUser', async(req, res) => {
         const password = formData.password;
         console.log('pass',password);
         console.log(email, password);
+
+        const login = await controller.loginUser(email);
+        console.log('login',login);
+        
         const Admin = await controller.loginAdmin(email);
         console.log(Admin);
-        const login = await controller.loginUser(email);
-        console.log(login);
+        
         if(login.length > 0) {
             // if (login.length === 0) {
             //     res.json({ success: false, message: 'User does not exist' });

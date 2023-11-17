@@ -4,14 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
 function AdminPage(){
-    let user = JSON.parse(localStorage.getItem('donateUser'));
-    const navigate = useNavigate();
     const[usersList, setUsersList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    if(!user) {
-        navigate('/');
-    }
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    let user = JSON.parse(localStorage.getItem('donateUser'));
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(user === null) {
+            navigate('/');    
+        }else if(user[0].role === 'user') {
+            navigate('/');
+        }else {
+            setIsAuthenticated(true);
+        }
+    },[user]);
+    
     const logout = () => {
         localStorage.removeItem('donateUser');
         navigate('/');
@@ -82,6 +89,8 @@ function AdminPage(){
     };
     return (
         <>
+        {isAuthenticated && (
+            <>
             <div className="admin-page">
                 <div className="main-header">
                     <nav>
@@ -107,7 +116,7 @@ function AdminPage(){
                             <button onClick={handleHomeTab}>Home</button>
                         </div>
                         <div className="logout">
-                            <button onClick={logout()}>Logout</button>
+                            <button onClick={logout}>Logout</button>
                         </div>
                     </nav>
                 </div>
@@ -147,6 +156,9 @@ function AdminPage(){
 
             </div>
             <Footer />
+            </>
+        )}
+            
         </>
         
     )
