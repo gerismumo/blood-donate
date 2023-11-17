@@ -75,8 +75,11 @@ code {
     margin-right: 5px;
     gap: 10px;
   }
+  .main-header .links{
+    font-size: 15px;
+  }
   .home-page a, button{
-    font-size: 17px;
+    font-size: 15px;
   }
   .main-header input {
     width: 100px;
