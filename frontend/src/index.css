@@ -75,7 +75,7 @@ code {
     margin-right: 5px;
     gap: 10px;
   }
-  .home-page  nav a {
+  .home-page a, button{
     font-size: 17px;
   }
   .main-header input {
