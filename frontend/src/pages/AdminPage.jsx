@@ -18,7 +18,7 @@ function AdminPage(){
             setIsAuthenticated(true);
         }
     },[user]);
-    
+
     const logout = () => {
         localStorage.removeItem('donateUser');
         navigate('/');
@@ -115,7 +115,7 @@ function AdminPage(){
                         <div className="links">
                             <button onClick={handleHomeTab}>Home</button>
                         </div>
-                        <div className="logout">
+                        <div className="links">
                             <button onClick={logout}>Logout</button>
                         </div>
                     </nav>

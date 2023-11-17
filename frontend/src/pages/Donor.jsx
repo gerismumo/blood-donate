@@ -14,7 +14,7 @@ function Donor() {
     useEffect(() => {
         if(user === null) {
             navigate('/');    
-        }else if(user[0].user_type !== 'BloodRecipient') {
+        }else if(user[0].user_type !== 'BloodRecipient' || !user[0].role === 'admin') {
             navigate('/');
         }else {
             setIsAuthenticated(true);
