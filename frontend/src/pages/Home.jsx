@@ -24,7 +24,6 @@ function Home () {
                     <div className="links-account">
                         <div className="links">
                             <a href="#about">About</a>
-                            <a href="#service">Services</a>
                             <a href="#howto">How to?</a>
                         </div>
                         <div className="donate">
