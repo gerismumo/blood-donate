@@ -161,7 +161,7 @@ code {
 }
 .accounts {
   margin-top: 80px;
-  position: absolute;
+  position: fixed;
   right: 10px; 
   background-color: #fff; 
   border: 1px solid #ccc; 
@@ -463,7 +463,7 @@ code {
 .login-page{
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 120vh; 
 }
 .login-page .login-content {
   margin-top: 90px;
@@ -604,6 +604,9 @@ code {
   flex-direction: column;
 text-align: center;
 align-items: center;
+}
+.users-cards .card-text {
+  text-wrap: wrap;
 }
 .users-cards .card-text .name{
   color: var(---green);
