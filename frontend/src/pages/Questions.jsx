@@ -61,7 +61,7 @@ function Questions(){
 
     console.log('donor', donorQuestions);
 
-    const combinedData = donorQuestions.map((donorObj) => {
+    const combinedData = donorQuestions && donorQuestions.map((donorObj) => {
         // Find the corresponding user object in usersList
         const matchingUser = usersList.find((userObj) => userObj.user_id === donorObj.user_id);
       
@@ -82,12 +82,12 @@ function Questions(){
     const updatedList = combinedData ? 
     combinedData.filter((data) => {
         return (
-            data.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            data.last_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            data.weight.toString().toLowerCase().includes(searchQuery.toLowerCase())||
-            data.age.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-            data.frequency.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            data.history.toLowerCase().includes(searchQuery.toLowerCase())     
+            (data.first_name && data.first_name.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.last_name && data.last_name.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.weight && data.weight.toString().toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.age && data.age.toString().toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (data.frequency && data.frequency.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (data.history && data.history.toLowerCase().includes(searchQuery.toLowerCase()) )    
         )
     }): [];
     // const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);

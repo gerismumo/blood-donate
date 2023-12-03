@@ -82,12 +82,12 @@ function ReceiverQuiz(){
     const updatedList = combinedData ? 
     combinedData.filter((data) => {
         return (
-            data.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            data.last_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            data.allergy.toLowerCase().includes(searchQuery.toLowerCase())||
-            data.condition_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            data.purpose.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            data.requirements.toLowerCase().includes(searchQuery.toLowerCase())     
+            (data.first_name && data.first_name.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.last_name && data.last_name.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.allergy && data.allergy.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (data.condition_user && data.condition_user.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (data.purpose && data.purpose.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (data.requirements && data.requirements.toLowerCase().includes(searchQuery.toLowerCase()))
         )
     }): [];
     // const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);

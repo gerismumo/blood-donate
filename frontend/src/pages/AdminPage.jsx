@@ -46,14 +46,14 @@ function AdminPage(){
     const updatedList = usersList ? 
     usersList.filter((user) => {
         return (
-            user.first_name.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.blood_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_gender.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.user_phone.toLowerCase().includes(searchQuery.toLowerCase())||
-            user.user_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.user_county.toLowerCase().includes(searchQuery.toLowerCase())
+            (user.first_name && user.first_name.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (user.last_name && user.last_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (user.blood_type && user.blood_type.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (user.user_type && user.user_type.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (user.user_gender && user.user_gender.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (user.user_phone && user.user_phone.toLowerCase().includes(searchQuery.toLowerCase()))||
+            (user.user_email && user.user_email.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (user.user_county && user.user_county.toLowerCase().includes(searchQuery.toLowerCase()))
         )
     }): [];
     // const filteredList = usersList.filter(user => user.blood_type  !== null && user.user_type !== null);
