@@ -7,6 +7,7 @@ function AdminPage(){
     const[usersList, setUsersList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [error, setError] = useState(null);
     let user = JSON.parse(localStorage.getItem('donateUser'));
     const navigate = useNavigate();
     useEffect(() => {
@@ -36,6 +37,8 @@ function AdminPage(){
             setUsersList(response.data.data);
         }catch(error) {
             console.log(error);
+            setError('Error fetching data. Please try again later.')
+
         }
     },[users_api]);
    
@@ -89,7 +92,9 @@ function AdminPage(){
     };
     return (
         <>
-        {isAuthenticated && (
+        { error ? (
+            <p>{error}</p>
+        ): isAuthenticated && (
             <>
             <div className="admin-page">
                 <div className="main-header">

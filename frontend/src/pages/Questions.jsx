@@ -9,6 +9,7 @@ function Questions(){
     const [donorQuestions, setDonorQuestions] = useState([]);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [error, setError] = useState(null);
     let user = JSON.parse(localStorage.getItem('donateUser'));
     const navigate = useNavigate();
     useEffect(() => {
@@ -37,6 +38,7 @@ function Questions(){
             setUsersList(response.data.data);
         }catch(error) {
             console.log(error);
+            setError('Error fetching data. Please try again later.')
         }
     }
    
@@ -124,7 +126,9 @@ function Questions(){
 
     return (
         <>
-        {isAuthenticated && (
+        {error? (
+            <p>{error}</p>
+        ): isAuthenticated && (
             <>
             <div className="admin-page">
                 <div className="main-header">

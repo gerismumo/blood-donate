@@ -9,6 +9,7 @@ function ReceiverQuiz(){
     const [searchQuery, setSearchQuery] = useState('');
     const [donorQuestions, setDonorQuestions] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [error, setError] = useState(null);
     let user = JSON.parse(localStorage.getItem('donateUser'));
     useEffect(() => {
         if(user === null) {
@@ -37,6 +38,7 @@ function ReceiverQuiz(){
             setUsersList(response.data.data);
         }catch(error) {
             console.log(error);
+            setError('Error fetching data. Please try again later.')
         }
     },[users_api])
    
@@ -124,72 +126,75 @@ function ReceiverQuiz(){
 
     return (
         <>
-        {isAuthenticated && (
-            <>
-             <div className="admin-page">
-                <div className="main-header">
-                    <nav>
-                        <div className="logo">
-                            <h2>Blood Connect</h2>
+        { error? (
+            <p>{error}</p>
+        ): isAuthenticated && (
+                    <>
+                     <div className="admin-page">
+                        <div className="main-header">
+                            <nav>
+                                <div className="logo">
+                                    <h2>Blood Connect</h2>
+                                </div>
+                                <div className="search-input">
+                                    <input
+                                    type="text" 
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder='Search...'
+                                    />
+                                </div>
+                                <div className="select-page">
+                                    <select name="page" id="page" value={selectedPage} onChange={handlePageChange}>
+                                        <option value="">Select a Page</option>
+                                        <option value='/usersPage'>Users Page</option>
+                                        <option value="/questionsPage">Donor Questions</option>
+                                        <option value="/receiverQuestions">Receiver Questions</option>
+                                    </select>
+                                </div>
+                                <div className="links">
+                                    <button onClick={handleHomeTab}>Home</button>
+                                </div>
+                                <div className="links">
+                                    <button onClick={logout}>Logout</button>
+                                </div>
+                            </nav>
                         </div>
-                        <div className="search-input">
-                            <input
-                            type="text" 
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder='Search...'
-                            />
+                        <div className="admin-page-content">
+                            <h1>Receiver Questions List</h1>
+                            <div className="users-table">
+                                <table>
+                                    <thead>
+                                        <th>Fist Name</th>
+                                        <th>Last Name</th>
+                                        <th>Any Allergy</th>
+                                        <th>Receiver Condition</th>
+                                        <th>Purpose</th>
+                                        <th>Special Requirements</th>
+                                        <th>Delete</th>
+                                    </thead>
+                                    <tbody>
+                                        {updatedList.map(user => (
+                                            <tr key={user.user_id}>
+                                                <td>{user.first_name}</td>
+                                                <td>{user.last_name}</td>
+                                                <td>{user.allergy}</td>
+                                                <td>{user.condition_user}</td>
+                                                <td>{user.purpose}</td>
+                                                <td>{user.requirements}</td>
+                                                <td><button onClick={() => handleDelete(user.user_id)}>Delete</button></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div className="select-page">
-                            <select name="page" id="page" value={selectedPage} onChange={handlePageChange}>
-                                <option value="">Select a Page</option>
-                                <option value='/usersPage'>Users Page</option>
-                                <option value="/questionsPage">Donor Questions</option>
-                                <option value="/receiverQuestions">Receiver Questions</option>
-                            </select>
-                        </div>
-                        <div className="links">
-                            <button onClick={handleHomeTab}>Home</button>
-                        </div>
-                        <div className="links">
-                            <button onClick={logout}>Logout</button>
-                        </div>
-                    </nav>
-                </div>
-                <div className="admin-page-content">
-                    <h1>Receiver Questions List</h1>
-                    <div className="users-table">
-                        <table>
-                            <thead>
-                                <th>Fist Name</th>
-                                <th>Last Name</th>
-                                <th>Any Allergy</th>
-                                <th>Receiver Condition</th>
-                                <th>Purpose</th>
-                                <th>Special Requirements</th>
-                                <th>Delete</th>
-                            </thead>
-                            <tbody>
-                                {updatedList.map(user => (
-                                    <tr key={user.user_id}>
-                                        <td>{user.first_name}</td>
-                                        <td>{user.last_name}</td>
-                                        <td>{user.allergy}</td>
-                                        <td>{user.condition_user}</td>
-                                        <td>{user.purpose}</td>
-                                        <td>{user.requirements}</td>
-                                        <td><button onClick={() => handleDelete(user.user_id)}>Delete</button></td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+        
                     </div>
-                </div>
-
-            </div>
-            <Footer />
-            </>
-        )}
+                    <Footer />
+                    </>
+                )
+            }
            
         </>
         

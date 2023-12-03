@@ -9,6 +9,7 @@ function Receiver() {
     // const [filteredList, setFilteredList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [error, setError] = useState(null);
     let user = JSON.parse(localStorage.getItem('donateUser'));
     // console.log('user',user);
     useEffect(() => {
@@ -38,6 +39,7 @@ function Receiver() {
                 setUsersList(response.data.data);
             }catch(error) {
                 console.log(error);
+                setError('Error fetching data. Please try again later.')
             }
         }
         usersData();
@@ -65,7 +67,9 @@ function Receiver() {
     console.log('filteredList',updatedList);
     return(
         <>
-        {isAuthenticated && (
+        {error ? (
+            <p>{error}</p>
+        ) : isAuthenticated && (
             <>
             <div className="donor-page">
         <div className="main-header">
