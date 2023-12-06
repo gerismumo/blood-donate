@@ -365,9 +365,9 @@ function Login() {
                 <label htmlFor="history">Health History</label>
                 <select name="history" id="history" onChange={questionsChange}>
                   <option value=""></option>
+                  <option value="Good Health">Good Health</option>
                   <option value="Recent Illness or Infection">Recent Illness or Infection</option>
                   <option value="Medications Currently Taking">Medications Currently Taking</option>
-                  <option value="Recent Travels">Recent Travels</option>
                 </select>
                 <div className="button">
                   <button type='submit'>Submit</button>
